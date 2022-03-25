@@ -109,8 +109,13 @@ public class LineBotController {
                 
             }
 
-            case "Menu": {
+            /*case "Menu": {
                 this.replyText(replyToken, "รายการอาหาร");
+            }*/
+
+            case "Menu": {
+                String menuUrl = "https://www.canva.com/design/DAE7_XXTFnc/078h7ary6_KltXSF4QAiXA/view?utm_content=DAE7_XXTFnc&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu";
+                this.reply(replyToken, new ImageMessage(menuUrl, menuUrl));
             }
 
             default:
