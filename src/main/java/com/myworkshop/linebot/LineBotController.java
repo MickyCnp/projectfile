@@ -116,21 +116,7 @@ public class LineBotController {
             case "Menu": {
                 String menuUrl = "https://www.canva.com/design/DAE7_2tsTtY/5dk8aITiiiEn0rxkivnd5Q/view?utm_content=DAE7_2tsTtY&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu";
 
-                try {
-                    MessageContentResponse response = lineMessagingClient.getMessageContent(content.getId()).get();
-                    DownloadedContent jpg = saveContent(menuUrl, response);
-                    DownloadedContent previewImage = createTempFile(menuUrl);
-
-                    system("convert", "-resize", "240x",
-                            jpg.path.toString(),
-                            previewImage.path.toString());
-
-                    reply(replyToken, new ImageMessage(jpg.getUri(), previewImage.getUri()));
-
-                } catch (InterruptedException | ExecutionException e) {
-                    reply(replyToken, new TextMessage("Cannot get image: " + content));
-                    throw new RuntimeException(e);
-                }
+                this.replyText(replyToken, menuUrl);
             }
 
             default:
