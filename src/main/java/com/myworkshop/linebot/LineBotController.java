@@ -7,8 +7,8 @@ import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.Event;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.ImageMessageContent;
-import com.linecorp.bot.model.event.message.LocationMessageContent;
-import com.linecorp.bot.model.event.message.StickerMessageContent;
+//import com.linecorp.bot.model.event.message.LocationMessageContent;
+//import com.linecorp.bot.model.event.message.StickerMessageContent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.*;
 import com.linecorp.bot.model.response.BotApiResponse;
@@ -44,27 +44,6 @@ public class LineBotController {
         log.info(event.toString());
         TextMessageContent message = event.getMessage();
         handleTextContent(event.getReplyToken(), event, message);
-    }
-
-    @EventMapping
-    public void handleStickerMessage(MessageEvent<StickerMessageContent> event) {
-        log.info(event.toString());
-        StickerMessageContent message = event.getMessage();
-        reply(event.getReplyToken(), new StickerMessage(
-                message.getPackageId(), message.getStickerId()
-        ));
-    }
-
-    @EventMapping
-    public void handleLocationMessage(MessageEvent<LocationMessageContent> event) {
-        log.info(event.toString());
-        LocationMessageContent message = event.getMessage();
-        reply(event.getReplyToken(), new LocationMessage(
-                (message.getTitle() == null) ? "Location replied" : message.getTitle(),
-                message.getAddress(),
-                message.getLatitude(),
-                message.getLongitude()
-        ));
     }
 
     @EventMapping
@@ -116,37 +95,28 @@ public class LineBotController {
                 break;
             }
 
-            case "order": {
+            case "Order": {
                 log.info("You have an order! ");
-                this.replyText(replyToken, "สั่งอาหารค้าบบบบ");
+                this.replyText(replyToken, "ทำการสั่งอาหาร");
             }
 
-            case "help": {
+            case "Information": {
                 this.reply(replyToken, Arrays.asList(
                     new TextMessage("ขั้นตอนการใช้ไลน์บอทสั่งอาหาร: "),
-                    new TextMessage("1.)พิมพ์ 'menu' เพื่อดูรายการอาหาร"),
-                    new TextMessage("2.)พิมพ์ 'order'เพื่อสั่งอาหาร")
+                    new TextMessage("1.)กดที่แถบ Menu เพื่อดูรายการอาหาร"),
+                    new TextMessage("2.)กดที่แถบ Order เพื่อสั่งอาหาร")
                 ));
                 
             }
 
-            case "menu": {
-                this.replyText(replyToken, "หิวข้าวววว");
+            case "Menu": {
+                this.replyText(replyToken, "รายการอาหาร");
             }
 
             default:
                 log.info("Return uncommand message %s : %s", replyToken, text);
                 this.replyText(replyToken, "ขออภัย ทางเราไม่ได้มีคำสั่งนั้น");
-                this.replyText(replyToken, "ไลน์บอทของทางร้านจะมีคำสั่งดังนี้: ");
-                this.replyText(replyToken, "พิมพ์ 'order' : เพื่อเข้าสู่ขั้นตอนการสั่งอาหาร");
-                this.replyText(replyToken, "พิมพ์ 'help' : เพื่อดูวิธีใช้งานไลน์บอท");
         }
-    }
-
-    private void handleStickerContent(String replyToken, StickerMessageContent content) {
-        reply(replyToken, new StickerMessage(
-                content.getPackageId(), content.getStickerId()
-        ));
     }
 
     private void replyText(@NonNull  String replyToken, @NonNull String message) {
