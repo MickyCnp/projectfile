@@ -103,20 +103,20 @@ public class LineBotController {
             case "Information": {
                 this.reply(replyToken, Arrays.asList(
                     new TextMessage("ขั้นตอนการใช้ไลน์บอทสั่งอาหาร: "),
-                    new TextMessage("1.)กดที่แถบ Menu เพื่อดูรายการอาหาร"),
-                    new TextMessage("2.)กดที่แถบ Order เพื่อสั่งอาหาร")
+                    new TextMessage("1.)กดที่แถบ Menu"),
+                    new TextMessage("2.)กดทีลิงค์เพื่อดูรายการอาหาร"),
+                    new TextMessage("3.)กดที่แถบ Order เพื่อทำการสั่งอาหาร")
                 ));
                 
             }
 
-            /*case "Menu": {
-                this.replyText(replyToken, "รายการอาหาร");
-            }*/
-
             case "Menu": {
                 String menuUrl = "https://www.canva.com/design/DAE7_2tsTtY/5dk8aITiiiEn0rxkivnd5Q/view?utm_content=DAE7_2tsTtY&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu";
 
-                this.replyText(replyToken, menuUrl);
+                this.reply(replyToken, Arrays.asList(
+                    new TextMessage("กดเข้าลิงค์ด้านล่างเพื่อดูรายการอาหาร"),
+                    new TextMessage(menuUrl)
+                ));
             }
 
             default:
